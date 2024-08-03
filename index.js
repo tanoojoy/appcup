@@ -2,26 +2,18 @@ const { MongoClient, ObjectId} = require('mongodb');
 const express = require('express'); 
 const bcrypt = require('bcrypt');
 const path = require('path');
-var bodyParser = require('body-parser')//add this
-var cors = require('cors')
-const jwt = require("jsonwebtoken")
-const saltRounds = 10;
-
+var bodyParser = require('body-parser');
 
 const app = express();
 app.use(bodyParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const jwtSecretKey = 'dsfdsfsdfdsvcsvdfgefg';
-const connection_String = "mongodb+srv://tanoo:ptkgSEvaPlh2fZfN@4byte.23ovkup.mongodb.net/";
-const database_name = "MDXHackathon";
+const connection_String = "mongodb+srv://{{username}}:{{password}}@4byte.23ovkup.mongodb.net/";
+const database_name = "{{database_name}}";
 const db_client = mongo_db_init();
 var total = 0;
 var return_array = [];
 
-
-// Set up CORS and JSON middlewares
-app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
