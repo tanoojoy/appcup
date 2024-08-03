@@ -8,8 +8,8 @@ const app = express();
 app.use(bodyParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const connection_String = "{{mongodb_connection_string}}";
-const database_name = "{{database_name}}";
+const connection_String = "mongodb+srv://tanoo:ptkgSEvaPlh2fZfN@4byte.23ovkup.mongodb.net/";
+const database_name = "MDXHackathon";
 const db_client = mongo_db_init();
 var total = 0;
 var return_array = [];
@@ -27,7 +27,7 @@ app.get('/fetch_item_count', (req, res) => {
     const connect_db = new Promise(async function(resolve, reject){
         await db_client.connect();
         const database = db_client.db(database_name);   
-        collection = database.collection('{{collection_name}}'); //change this to your collection name
+        collection = database.collection('items'); //change this to your collection name
         resolve(collection);
     }); 
     
