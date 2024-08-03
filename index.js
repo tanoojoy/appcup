@@ -314,7 +314,10 @@ app.post('/create_item', (req, res) => {
     });
 })
 
-app.listen(3080);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(Our app is running on port ${ PORT });
+});
 
 function mongo_db_init(){
     const uri = connection_String;
