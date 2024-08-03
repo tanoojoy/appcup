@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const connection_String = "mongodb+srv://{{username}}:{{password}}@4byte.23ovkup.mongodb.net/";
+const connection_String = "{{mongodb_connection_string}}";
 const database_name = "{{database_name}}";
 const db_client = mongo_db_init();
 var total = 0;
@@ -27,21 +27,19 @@ app.get('/fetch_item_count', (req, res) => {
     const connect_db = new Promise(async function(resolve, reject){
         await db_client.connect();
         const database = db_client.db(database_name);   
-        collection = database.collection('items');
+        collection = database.collection('{{collection_name}}'); //change this to your collection name
         resolve(collection);
     }); 
     
     Promise.all([connect_db]).then(async function(response){
         
-        const query = { };
+        const query = { };   //empty to query everything
         const cursor = await collection.find(query);
         total = await cursor.count();
 
         for await (const doc of cursor) {
             create_json(doc);
         }
-
-        console.log(return_array);
         
         res.status(200).json({ count: total, list: return_array });
 
