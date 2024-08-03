@@ -3,8 +3,6 @@ const express = require('express');
 const path = require('path');
 var bodyParser = require('body-parser')//add this
 
-
-
 const app = express();
 app.use(bodyParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -17,23 +15,9 @@ const db_client = mongo_db_init();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.post('/get_item_details', (req, res) => {
-   
-    const connect_db = new Promise(async function(resolve, reject){
-        await db_client.connect();
-        const database = db_client.db(database_name);   
-        collection = database.collection('items');
-        resolve(collection);
-    }); 
-
-    Promise.all([connect_db]).then(async function(response){
-        
-        const item = await collection.find();
-        console.log(item);
-    })
+app.get('/siva', (req, res) => {
+   res.send("HEllo world").status(200);
 })
-
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
