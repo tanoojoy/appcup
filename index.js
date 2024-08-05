@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }))
 
 // Basic home route for the API
 app.get('/', (_req, res) => {
+    console.log("Hello");
     res.send('Auth API.\nPlease use POST /auth & POST /verify for authentication')
 })
 
