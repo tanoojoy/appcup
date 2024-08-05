@@ -9,7 +9,7 @@ app.use(bodyParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 const connection_String = "mongodb+srv://tanoo:ptkgSEvaPlh2fZfN@4byte.23ovkup.mongodb.net/";
-const database_name = "MDXHackathon";
+const database_name = "AppCup";
 const db_client = mongo_db_init();
 var total = 0;
 var return_array = [];
@@ -49,6 +49,26 @@ app.get('/fetch_item_count', (req, res) => {
 
 app.post('/register_doc_interest', (req, res) => {
     const { doc_id, doc_name, doc_experience, doc_age, doc_hospital, doc_accreditation } = req.body;
+
+    const connect_db = new Promise(async function(resolve, reject){
+        await db_client.connect();
+        const database = db_client.db(database_name);   
+        collection = database.collection('doc_interest'); //change this to your collection name
+        resolve(collection);
+    }); 
+
+    Promise.all([connect_db]).then(async function(response){
+        
+        const query = { doc_id: doc_id, doc_name: doc_name, doc_experience: doc_experience, doc_age: doc_age, doc_hospital: doc_hospital, doc_accreditation: doc_accreditation };   //empty to query everything
+        const cursor = await collection.insertOne(query);
+
+        console.log(cursor);
+        
+        res.status(200).json({ "message": "success" });
+
+    })
+
+
 
     res.json({ "result": "received" , "doc_id": doc_id, "doc_name": doc_name, "doc_experience": doc_experience, "doc_age": doc_age, "doc__hospital": doc_hospital, "doc_accreditation": doc_accreditation }).status(200);
 })
