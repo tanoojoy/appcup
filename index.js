@@ -48,9 +48,9 @@ app.get('/fetch_item_count', (req, res) => {
 })
 
 app.post('/register_doc_interest', (req, res) => {
-    const { doc_id, doc_name, doc_experience } = req.body;
+    const { doc_id, doc_name, doc_experience, doc_age, doc_hospital, doc_accreditation } = req.body;
 
-    res.json({ "result": "received" , "doc_id": doc_id, "doc_name": doc_name, "doc_experience": doc_experience }).status(200);
+    res.json({ "result": "received" , "doc_id": doc_id, "doc_name": doc_name, "doc_experience": doc_experience, "doc_age": doc_age, "doc__hospital": doc_hospital, "doc_accreditation": doc_accreditation }).status(200);
 })
 
 const PORT = process.env.PORT || 3000;
