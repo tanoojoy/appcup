@@ -47,6 +47,12 @@ app.get('/fetch_item_count', (req, res) => {
     })
 })
 
+app.post('/register_doc_interest', (req, res) => {
+    const { doc_id, doc_name, doc_experience } = req.body;
+
+    res.json({ "result": "received" , "doc_id": doc_id, "doc_name": doc_name, "doc_experience": doc_experience }).status(200);
+})
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log("Our app is running on port ${ PORT }");
