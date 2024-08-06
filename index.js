@@ -73,6 +73,43 @@ app.post('/register_doc_interest', (req, res) => {
     res.json({ "result": "received" , "doc_id": doc_id, "doc_name": doc_name, "doc_experience": doc_experience, "doc_age": doc_age, "doc__hospital": doc_hospital, "doc_accreditation": doc_accreditation }).status(200);
 })
 
+app.post('/edit_patient_profile', (req, res) => {
+    const { user_id, name, city, state, bio } = req.body;
+
+    const connect_db = new Promise(async function(resolve, reject){
+        await db_client.connect();
+        const database = db_client.db(database_name);   
+        collection = database.collection('patients'); //change this to your collection name
+        resolve(collection);
+    }); 
+
+    Promise.all([connect_db]).then(async function(response){
+        
+        const filter = { user_id: user_id };        
+        const options = { upsert: true };
+        const updateDoc = {
+            $set: {
+                user_id: user_id,
+                name: name,
+                city: city,
+                state: state,
+                bio: bio
+            },
+        };
+
+        const result = await collection.updateOne(filter, updateDoc, options);
+
+        console.log(result);
+        if(result.user_id == user_id){
+            res.status(200).json({"message": "insert_success"});
+        }
+        else{
+            res.status(200).json({"message": "insert_failed"})
+        }
+        
+    })
+})
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log("Our app is running on port ${ PORT }");
