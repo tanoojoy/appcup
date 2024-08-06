@@ -110,8 +110,9 @@ app.post('/edit_patient_profile', (req, res) => {
     })
 })
 
-app.get('/get_patient', (req, res)=>{
-
+app.post('/get_patient', (req, res)=>{
+    const { user_id } = req.body;
+    
     const connect_db = new Promise(async function(resolve, reject){
         await db_client.connect();
         const database = db_client.db(database_name);   
@@ -120,8 +121,7 @@ app.get('/get_patient', (req, res)=>{
     }); 
 
     Promise.all([connect_db]).then(async function(response){
-        const { user_id } = req.body;
-
+        
         const query = { user_id: user_id };
         const options = {
             projection: { user_id: 1, profile_completed: 1 },
