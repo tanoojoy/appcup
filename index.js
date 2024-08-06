@@ -112,7 +112,7 @@ app.post('/edit_patient_profile', (req, res) => {
 
 app.post('/get_patient', (req, res)=>{
     const { user_id } = req.body;
-    
+
     const connect_db = new Promise(async function(resolve, reject){
         await db_client.connect();
         const database = db_client.db(database_name);   
@@ -127,7 +127,7 @@ app.post('/get_patient', (req, res)=>{
             projection: { user_id: 1, profile_completed: 1 },
         };
 
-        const result = await findOne(query, options);
+        const result = await collection.findOne(query, options);
         console.log(result);
 
         res.status(200).json({ "profile_completed": result.profile_completed});
