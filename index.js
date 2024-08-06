@@ -100,7 +100,7 @@ app.post('/edit_patient_profile', (req, res) => {
         const result = await collection.updateOne(filter, updateDoc, options);
 
         console.log(result);
-        if(result.user_id == user_id){
+        if(result.acknowledged == true){
             res.status(200).json({"message": "insert_success"});
         }
         else{
