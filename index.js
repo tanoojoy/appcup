@@ -124,7 +124,7 @@ app.post('/get_patient', (req, res)=>{
         
         const query = { user_id: user_id };
         const options = {
-            projection: { user_id: 1, profile_completed: 1 },
+            projection: { user_id: 1, profile_completed: 1, name: 1 },
         };
 
         const result = await collection.findOne(query, options);
