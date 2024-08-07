@@ -130,7 +130,7 @@ app.post('/get_patient', (req, res)=>{
         const result = await collection.findOne(query, options);
         console.log(result);
 
-        res.status(200).json({ "profile_completed": result.profile_completed, "name": name});
+        res.status(200).json({ "profile_completed": result.profile_completed, "name": result.name});
     })
 })
 
