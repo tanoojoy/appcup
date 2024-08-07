@@ -134,6 +134,34 @@ app.post('/get_patient', (req, res)=>{
     })
 })
 
+app.post('/save_voice', (req, res) => {
+    const { user_id, audio_path } = req.body;
+
+    const connect_db = new Promise(async function(resolve, reject){
+        await db_client.connect();
+        const database = db_client.db(database_name);   
+        collection = database.collection('voice_recordings'); //change this to your collection name
+        resolve(collection);
+    }); 
+
+    Promise.all([connect_db]).then(async function(response){
+        
+        const query = { user_id: user_id };
+        
+        const options = { upsert: true };
+        const updateDoc = {
+            $set: {
+                user_id: user_id,
+                audio_path: audio_path
+            },
+        };
+
+        res.status(200).json({ "message": "success" });
+    })
+
+
+})
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log("Our app is running on port ${ PORT }");
