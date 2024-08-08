@@ -158,10 +158,31 @@ app.post('/save_voice', (req, res) => {
             },
         };
 
+        const result = await collection.updateOne(filter, updateDoc, options);
+        console.log(result);
+
         res.status(200).json({ "message": "success" });
     })
 
 
+})
+
+app.get('/get_doctors', (req, res) => {
+    const connect_db = new Promise(async function(resolve, reject){
+        await db_client.connect();
+        const database = db_client.db(database_name);   
+        collection = database.collection('doctors'); //change this to your collection name
+        resolve(collection);
+    }); 
+
+    Promise.all([connect_db]).then(async function(response){
+        const query = { doctor_name: "Tanoo" };
+
+        const result = await collection.findOne(query);
+        
+        res.status(200).json({ "doc_name": result.doctor_name });
+
+    })
 })
 
 const PORT = process.env.PORT || 3000;
