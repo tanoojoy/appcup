@@ -150,7 +150,7 @@ app.post('/save_voice', (req, res) => {
         
         const query = { user_id: user_id, audio_path: audio_path };
         
-        const result = await collection.insertOne(updateDoc, options);
+        const result = await collection.insertOne(query);
         console.log(result);
 
         res.status(200).json({ "message": "success" });
