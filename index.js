@@ -148,17 +148,9 @@ app.post('/save_voice', (req, res) => {
 
     Promise.all([connect_db]).then(async function(response){
         
-        const query = { user_id: user_id };
+        const query = { user_id: user_id, audio_path: audio_path };
         
-        const options = { upsert: true };
-        const updateDoc = {
-            $set: {
-                user_id: user_id,
-                audio_path: audio_path
-            },
-        };
-
-        const result = await collection.updateOne(updateDoc, options);
+        const result = await collection.insertOne(updateDoc, options);
         console.log(result);
 
         res.status(200).json({ "message": "success" });
