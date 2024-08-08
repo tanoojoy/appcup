@@ -137,6 +137,8 @@ app.post('/get_patient', (req, res)=>{
 app.post('/save_voice', (req, res) => {
     const { user_id, audio_path } = req.body;
 
+    console.log(audio_path);
+
     const connect_db = new Promise(async function(resolve, reject){
         await db_client.connect();
         const database = db_client.db(database_name);   
