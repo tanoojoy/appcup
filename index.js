@@ -158,7 +158,7 @@ app.post('/save_voice', (req, res) => {
             },
         };
 
-        const result = await collection.updateOne(filter, updateDoc, options);
+        const result = await collection.updateOne(updateDoc, options);
         console.log(result);
 
         res.status(200).json({ "message": "success" });
